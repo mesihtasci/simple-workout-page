@@ -1,77 +1,146 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>4-Tage Superset Plan – Klick = erledigt</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4-Tage Superset Plan</title>
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      const resetBtn = document.getElementById('reset');
+
+      // Load state from localStorage
+      checkboxes.forEach(cb => {
+        const saved = localStorage.getItem(cb.id);
+        if (saved === 'true') cb.checked = true;
+        cb.addEventListener('change', () => {
+          localStorage.setItem(cb.id, cb.checked);
+        });
+      });
+
+      resetBtn.addEventListener('click', () => {
+        checkboxes.forEach(cb => {
+          cb.checked = false;
+          localStorage.removeItem(cb.id);
+        });
+      });
+    });
+  </script>
   <style>
-    :root{--bg:#f2f5f9;--card:#fff;--accent:#0077ff;--text:#222;--sub:#555;--border:#e0e6ed}
-    *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;padding:1rem}
-    h1{font-size:1.6rem;margin:0 0 1rem;text-align:center}h2{font-size:1.25rem;margin:1.5rem 0 .5rem;color:var(--accent)}
-    .card{background:var(--card);border-radius:12px;padding:.75rem 1rem;margin-bottom:.75rem;box-shadow:0 2px 6px rgba(0,0,0,.06)}
-    .ex-row{display:flex;justify-content:space-between;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--border);cursor:pointer;user-select:none}
-    .ex-row:last-child{border-bottom:none}
-    .main{font-weight:600}.alt{font-size:.8rem;color:var(--sub);margin-top:.15rem}
-    a{color:var(--accent);text-decoration:none}.sets{font-size:.9rem;white-space:nowrap;margin-left:.5rem}
-    .note{text-align:center;font-size:.85rem;color:var(--sub);margin:-.5rem 0 1rem}
-    .done{text-decoration:line-through;opacity:.55}
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background: #f9fafb;
+      color: #111;
+    }
+    .day {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      text-align: center;
+    }
+    h2 {
+      color: #2563eb;
+    }
+    li {
+      list-style: none;
+      background: #f3f4f6;
+      padding: .5rem .75rem;
+      border-radius: .75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: .5rem 0;
+    }
+    li:hover { background: #e5e7eb; }
+    input[type="checkbox"] {
+      width: 1.2rem;
+      height: 1.2rem;
+      accent-color: #2563eb;
+      margin-right: .5rem;
+    }
+    .alt {
+      font-size: .8rem;
+      color: #6b7280;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: .75rem 1rem;
+      border-radius: .75rem;
+      width: 100%;
+      font-size: 1rem;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    @media (max-width: 600px) {
+      li { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
-
 <body>
+  <h1>4-Tage Superset Plan ✅</h1>
 
-<h1>4-Tage Superset Plan</h1>
-<p class="note">Zeile anklicken = erledigt (wird durchgestrichen). Alle Links öffnen deutsche YouTube-Demos.</p>
+  <div id="plan">
+    <div class="day">
+      <h2>Montag – Brust + Bizeps + Core</h2>
+      <ul>
+        <li><label><input id="mo1" type="checkbox">Bankdrücken (Langhantel) – 4×5–7 <div class="alt">Alt: KH-Bankdrücken oder Schrägbank</div></label></li>
+        <li><label><input id="mo2" type="checkbox">Face Pull (Kabel/Band) – 4×12–15 <div class="alt">Alt: Reverse Fly</div></label></li>
+        <li><label><input id="mo3" type="checkbox">Schrägbank-KH-Drücken – 3×8–10 <div class="alt">Alt: Maschine oder Dips</div></label></li>
+        <li><label><input id="mo4" type="checkbox">Schrägbank-KH-Curl – 3×10–12 <div class="alt">Alt: Preacher- oder SZ-Curl</div></label></li>
+        <li><label><input id="mo5" type="checkbox">Cable-Cross (low→high) – 3×12–15 <div class="alt">Alt: KH-Flys oder enge Push-Ups</div></label></li>
+        <li><label><input id="mo6" type="checkbox">Hammer-Curl – 3×12–15 <div class="alt">Alt: Wechsel-KH-Curl oder Kabel-Curl</div></label></li>
+        <li><label><input id="mo7" type="checkbox">Hängende Kniehebel – 3×12–15 <div class="alt">Alt: Beinheben liegend</div></label></li>
+      </ul>
+    </div>
 
-<!-- Montag -->
-<h2>Montag – Brust + Bizeps (Gym)</h2>
-<div class="card">
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=_R0QA8y4PL8" target="_blank">Bankdrücken</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=5tEtA7vrQJ4" target="_blank">Kurzhantel-Bankdrücken</a> | <a href="https://www.youtube.com/watch?v=6bJ7d8j0-Ck" target="_blank">Schrägbank-Kurzhanteldrücken</a></div></div><div class="sets">4×5-7</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=zE1-6qQ4QjQ" target="_blank">Langhantel-Curl</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=bwEe7Utni5U" target="_blank">SZ-Stangen-Curl</a> | <a href="https://www.youtube.com/watch?v=5t5qV5zQjDM" target="_blank">Wechsel-Kurzhantel-Curl</a></div></div><div class="sets">4×8-10</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=6bJ7d8j0-Ck" target="_blank">Schrägbank-Kurzhanteldrücken</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=5tEtA7vrQJ4" target="_blank">Kurzhantel-Bankdrücken</a> | <a href="https://www.youtube.com/watch?v=Ioq3xBzSX4E" target="_blank">Maschine-Schrägbank</a></div></div><div class="sets">3×8-10</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=5t5qV5zQjDM" target="_blank">Schrägbank-Kurzhantel-Curl</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=TYJqA8xX0eA" target="_blank">Preacher-Curl</a> | <a href="https://www.youtube.com/watch?v=zE1-6qQ4QjQ" target="_blank">Hammer-Curl</a></div></div><div class="sets">3×10-12</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=Ioq3xBzSX4E" target="_blank">Cable-Cross (low→high)</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=6bJ7d8j0-Ck" target="_blank">Kurzhantel-Fly</a> | <a href="https://www.youtube.com/watch?v=5tEtA7vrQJ4" target="_blank">enge Push-Ups</a></div></div><div class="sets">3×12-15</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=zE1-6qQ4QjQ" target="_blank">Hammer-Curl</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=5t5qV5zQjDM" target="_blank">Wechsel-Kurzhantel-Curl</a> | <a href="https://www.youtube.com/watch?v=TYJqA8xX0eA" target="_blank">SZ-Stangen-Curl</a></div></div><div class="sets">3×12-15</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=3vO8IPxQyqY" target="_blank">Hängende Kniehebel</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=J7x1qmC8_P4" target="_blank">Beinheben am Boden</a> | <a href="https://www.youtube.com/watch?v=3VcKaXpzqRo" target="_blank">Plank</a></div></div><div class="sets">3×12</div></div>
-</div>
+    <div class="day">
+      <h2>Mittwoch – Rücken + Trizeps + Unterer Rücken</h2>
+      <ul>
+        <li><label><input id="mi1" type="checkbox">Klimmzug (weit) – 4×6–8 <div class="alt">Alt: Rudern oder Latzug</div></label></li>
+        <li><label><input id="mi2" type="checkbox">Enges Bankdrücken – 4×6–8 <div class="alt">Alt: Über-Kopf-Extension oder Dips</div></label></li>
+        <li><label><input id="mi3" type="checkbox">Brustgestütztes Rudern – 4×8–10 <div class="alt">Alt: Einarmiges KH-Rudern</div></label></li>
+        <li><label><input id="mi4" type="checkbox">Über-Kopf-KH-Extension – 4×10–12 <div class="alt">Alt: Rope Pushdown</div></label></li>
+        <li><label><input id="mi5" type="checkbox">Face Pull – 3×12–15 <div class="alt">Alt: Reverse Fly</div></label></li>
+        <li><label><input id="mi6" type="checkbox">Rückenstrecker – 3×10–12 <div class="alt">Alt: RDL oder Hyperextensions</div></label></li>
+      </ul>
+    </div>
 
-<!-- Mittwoch -->
-<h2>Mittwoch – Rücken + Trizeps (Gym)</h2>
-<div class="card">
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=eGo4IYlbE5g" target="_blank">Klimmzug (weit, gewichtet)</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=G0b7n5L5J7U" target="_blank">Australisches Rudern</a> | <a href="https://www.youtube.com/watch?v=8iPEnn-ltC8" target="_blank">Sitzendes Kabel-Rudern</a></div></div><div class="sets">4×6-8</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=VOtEf6o3oio" target="_blank">Enges Bankdrücken</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=YbX7WdA2ohw" target="_blank">Über-Kopf-KH-Extension</a> | <a href="https://www.youtube.com/watch?v=2-LAMcpzODU" target="_blank">Kabel-Drücken (Rope)</a></div></div><div class="sets">4×6-8</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=8iPEnn-ltC8" target="_blank">Rudern (Brust gestützt)</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=G0b7n5L5J7U" target="_blank">Inverted Row</a> | <a href="https://www.youtube.com/watch?v=2C-uNgKwPLE" target="_blank">Einarmiges KH-Rudern</a></div></div><div class="sets">4×8-10</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=YbX7WdA2ohw" target="_blank">Über-Kopf-Kurzhantel-Extension</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=2-LAMcpzODU" target="_blank">Kabel-Drücken (Rope)</a> | <a href="https://www.youtube.com/watch?v=VOtEf6o3oio" target="_blank">Dips (enger Griff)</a></div></div><div class="sets">4×10-12</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=rep-qVOkqgk" target="_blank">Face Pull</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=uoLQYKUDCYQ" target="_blank">Reverse Fly (KH)</a> | <a href="https://www.youtube.com/watch?v=3VcKaXpzqRo" target="_blank">Band Pull-Apart</a></div></div><div class="sets">3×12-15</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=2-LAMcpzODU" target="_blank">Kabel-Drücken (Rope)</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=YbX7WdA2ohw" target="_blank">Über-Kopf-Extension</a> | <a href="https://www.youtube.com/watch?v=VOtEf6o3oio" target="_blank">Dips (enger Griff)</a></div></div><div class="sets">3×12-15</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=ph3p41p0Rsc" target="_blank">Rückenstrecker (gewichtet)</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=4CiTqfCt6Zg" target="_blank">Rumänisches Kreuzheben</a> | <a href="https://www.youtube.com/watch?v=J7x1qmC8_P4" target="_blank">Hyperextension am Boden</a></div></div><div class="sets">3×10-12</div></div>
-</div>
+    <div class="day">
+      <h2>Freitag – Brust/Rücken Pump</h2>
+      <ul>
+        <li><label><input id="fr1" type="checkbox">Push-Ups – 3×12–15 <div class="alt">Alt: Dips</div></label></li>
+        <li><label><input id="fr2" type="checkbox">Chin-Ups – 3×8–10 <div class="alt">Alt: Rudern am Tisch</div></label></li>
+        <li><label><input id="fr3" type="checkbox">Australisches Rudern – 3×10–12 <div class="alt">Alt: TRX-Row</div></label></li>
+        <li><label><input id="fr4" type="checkbox">Pike Push-Ups – 3×8–10 <div class="alt">Alt: Arnold Press</div></label></li>
+        <li><label><input id="fr5" type="checkbox">Face Pull (Band) – 3×15–20 <div class="alt">Alt: Reverse Fly</div></label></li>
+        <li><label><input id="fr6" type="checkbox">Hängende Kniehebel – 3×12–15 <div class="alt">Alt: Beinheben am Boden</div></label></li>
+      </ul>
+    </div>
 
-<!-- Freitag GYM OPTION -->
-<h2>Freitag – Brust/Rücken Pump (Gym-Variante)</h2>
-<div class="card">
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=Ioq3xBzSX4E" target="_blank">Cable-Cross (low→high)</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=6bJ7d8j0-Ck" target="_blank">Schrägbank-Kurzhantel-Fly</a> | <a href="https://www.youtube.com/watch?v=5tEtA7vrQJ4" target="_blank">Maschinen-Fly</a></div></div><div class="sets">3×12-15</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=8iPEnn-ltC8" target="_blank">Sitzendes Kabel-Rudern</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=G0b7n5L5J7U" target="_blank">Klimmzug (Obergriff)</a> | <a href="https://www.youtube.com/watch?v=2C-uNgKwPLE" target="_blank">T-Bar-Rudern</a></div></div><div class="sets">3×10-12</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=6bJ7d8j0-Ck" target="_blank">Schrägbank-Kurzhanteldrücken</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=5tEtA7vrQJ4" target="_blank">Kurzhantel-Bankdrücken</a> | <a href="https://www.youtube.com/watch?v=Ioq3xBzSX4E" target="_blank">Maschine-Schrägbank</a></div></div><div class="sets">3×8-10</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=eGo4IYlbE5g" target="_blank">Klimmzug (Obergriff, leicht)</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=G0b7n5L5J7U" target="_blank">Latzug</a> | <a href="https://www.youtube.com/watch?v=8iPEnn-ltC8" target="_blank">Sitzendes Rudern</a></div></div><div class="sets">3×8-10</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=3VcKaXpzqRo" target="_blank">Seitheben</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=uoLQYKUDCYQ" target="_blank">Kabel-Seitheben</a> | <a href="https://www.youtube.com/watch?v=qEwKCR5JCog" target="_blank">Leaning Lateral</a></div></div><div class="sets">3×12-15</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=rep-qVOkqgk" target="_blank">Face Pull</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=uoLQYKUDCYQ" target="_blank">Reverse Fly (KH)</a> | <a href="https://www.youtube.com/watch?v=3VcKaXpzqRo" target="_blank">Band Pull-Apart</a></div></div><div class="sets">3×15-20</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=3vO8IPxQyqY" target="_blank">Hängende Kniehebel</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=J7x1qmC8_P4" target="_blank">Beinheben am Boden</a> | <a href="https://www.youtube.com/watch?v=3VcKaXpzqRo" target="_blank">Plank</a></div></div><div class="sets">3×12</div></div>
-</div>
+    <div class="day">
+      <h2>Samstag – Beine + Schultern + Core</h2>
+      <ul>
+        <li><label><input id="sa1" type="checkbox">Kniebeuge (Langhantel) – 4×6–8 <div class="alt">Alt: Beinpresse</div></label></li>
+        <li><label><input id="sa2" type="checkbox">Reverse Fly – 4×12–15 <div class="alt">Alt: Rear-Delt-Maschine</div></label></li>
+        <li><label><input id="sa3" type="checkbox">Schulterdrücken – 4×8–10 <div class="alt">Alt: Arnold Press</div></label></li>
+        <li><label><input id="sa4" type="checkbox">Rumänisches Kreuzheben – 3×8–10 <div class="alt">Alt: Bein-Curl</div></label></li>
+        <li><label><input id="sa5" type="checkbox">Bulgarian Split Squat – 3×10–12/Bein <div class="alt">Alt: Step-Ups</div></label></li>
+        <li><label><input id="sa6" type="checkbox">Seitheben – 3×12–15 <div class="alt">Alt: Kabel-Seitheben</div></label></li>
+        <li><label><input id="sa7" type="checkbox">Wadenheben – 4×12–15 <div class="alt">Alt: Einbeinige Variante</div></label></li>
+        <li><label><input id="sa8" type="checkbox">Kurzhantel-Shrug – 4×12–15 <div class="alt">Alt: Langhantel-Shrug</div></label></li>
+      </ul>
+    </div>
+  </div>
 
-<!-- Samstag/Sonntag -->
-<h2>Samstag / Sonntag – Beine + Schultern (Gym)</h2>
-<div class="card">
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=ultWZbUMPL8" target="_blank">Kniebeuge (Langhantel)</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=2C-uNgKwPLE" target="_blank">Bulgarian Split Squat</a> | <a href="https://www.youtube.com/watch?v=4CiTqfCt6Zg" target="_blank">Beinpresse</a></div></div><div class="sets">4×6-8</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=qEwKCR5JCog" target="_blank">Kurzhantel-Schulterdrücken stehend</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=3VcKaXpzqRo" target="_blank">Arnold-Press</a> | <a href="https://www.youtube.com/watch?v=J7x1qmC8_P4" target="_blank">Maschine</a></div></div><div class="sets">4×8-10</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=4CiTqfCt6Zg" target="_blank">Rumänisches Kreuzheben</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=ph3p41p0Rsc" target="_blank">Bein-Curl (liegend)</a> | <a href="https://www.youtube.com/watch?v=J7x1qmC8_P4" target="_blank">Good-Mornings</a></div></div><div class="sets">3×8-10</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=3VcKaXpzqRo" target="_blank">Seitheben</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=uoLQYKUDCYQ" target="_blank">Kabel-Seitheben</a> | <a href="https://www.youtube.com/watch?v=qEwKCR5JCog" target="_blank">Leaning Lateral</a></div></div><div class="sets">3×12-15</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=2C-uNgKwPLE" target="_blank">Bulgarian Split Squat</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=ultWZbUMPL8" target="_blank">Goblet-Squat</a> | <a href="https://www.youtube.com/watch?v=4CiTqfCt6Zg" target="_blank">Beinpresse (hoch)</a></div></div><div class="sets">3×10-12 / Bein</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=uoLQYKUDCYQ" target="_blank">Reverse Fly (KH)</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=rep-qVOkqgk" target="_blank">Face Pull</a> | <a href="https://www.youtube.com/watch?v=3VcKaXpzqRo" target="_blank">Band Pull-Apart</a></div></div><div class="sets">3×12-15</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=IIrC5w7_TU0" target="_blank">Sitzende Wadenhebung</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=ph3p41p0Rsc" target="_blank">Stehende Wadenhebung</a> | <a href="https://www.youtube.com/watch?v=4CiTqfCt6Zg" target="_blank">Einbeinige Wadenhebung</a></div></div><div class="sets">4×12-15</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=9efgcAjWl0U" target="_blank">Kurzhantel-Shrug</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=IIrC5w7_TU0" target="_blank">Langhantel-Shrug</a> | <a href="https://www.youtube.com/watch?v=rep-qVOkqgk" target="_blank">Face-Shrug</a></div></div><div class="sets">4×12-15</div></div>
-  <div class="ex-row" onclick="this.classList.toggle('done')"><div><div class="main"><a href="https://www.youtube.com/watch?v=ph3p41p0Rsc" target="_blank">Rückenstrecker (Body-weight)</a></div><div class="alt">Alt: <a href="https://www.youtube.com/watch?v=4CiTqfCt6Zg" target="_blank">Superman</a> | <a href="https://www.youtube.com/watch?v=J7x1qmC8_P4" target="_blank">Good-Mornings (leicht)</a></div></div><div class="sets">2×15</div></div>
-</div>
-
+  <button id="reset">Alle abhaken zurücksetzen</button>
 </body>
 </html>
