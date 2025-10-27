@@ -1,598 +1,215 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>4-Tage Superset Plan — Checkliste</title>
-  <meta name="description" content="Optimierter 4-Tage Superset-Plan (9.5/10) mit Alternativübungen. Mobile-friendly, abhakbar, lokal gespeichert.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4-Tage Superset Plan</title>
   <style>
-    :root{
-      --bg:#f7fafc;
-      --card:#ffffff;
-      --muted:#6b7280;
-      --accent:#2563eb;
-      --glass: rgba(255,255,255,0.6);
-      --radius:12px;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 0;
+      color: #111827;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background:linear-gradient(180deg,var(--bg),#eef2ff 120%);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      color:#0f172a;
-      padding:16px;
+    header {
+      text-align: center;
+      background: #111827;
+      color: white;
+      padding: 1rem;
     }
-
-    header{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:14px;
+    main {
+      max-width: 800px;
+      margin: 1rem auto;
+      padding: 1rem;
     }
-    .title{
-      display:flex;
-      gap:12px;
-      align-items:center;
+    section {
+      background: white;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
-    .logo{
-      width:56px;
-      height:56px;
-      border-radius:12px;
-      background:linear-gradient(135deg,var(--accent),#7c3aed);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:white;
-      font-weight:700;
-      box-shadow: 0 6px 18px rgba(37,99,235,0.18);
+    h2 {
+      margin-top: 0;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 0.25rem;
     }
-    h1{font-size:1.15rem;margin:0}
-    p.subtitle{margin:0;color:var(--muted);font-size:.88rem}
-
-    main{max-width:960px;margin:0 auto}
-    .controls{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      margin-bottom:12px;
-      flex-wrap:wrap;
+    label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin: 0.25rem 0;
     }
-    .select, .btn{
-      background:var(--card);
-      border:1px solid rgba(15,23,42,0.06);
-      padding:8px 12px;
-      border-radius:10px;
-      font-size:.95rem;
-      box-shadow: 0 4px 10px rgba(2,6,23,0.04);
+    input[type="checkbox"] {
+      width: 1.1rem;
+      height: 1.1rem;
+      margin-top: 0.15rem;
     }
-    .btn{
-      cursor:pointer;
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      color:white;
-      background:var(--accent);
-      border:none;
+    .alt {
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin-left: 1.5rem;
     }
-    .btn.ghost{
-      background:transparent;color:var(--accent);border:1px solid rgba(37,99,235,0.14);
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      margin-top: 1rem;
     }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
+    button:hover {
+      background: #1d4ed8;
     }
-    @media (max-width:860px){
-      .grid{grid-template-columns:1fr;}
+    .tab-buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
     }
-
-    .card{
-      background:var(--card);
-      border-radius:var(--radius);
-      padding:12px;
-      box-shadow: 0 6px 22px rgba(2,6,23,0.06);
-      border:1px solid rgba(15,23,42,0.03);
+    .tab-buttons button {
+      flex: 1;
+      background: #e5e7eb;
+      color: #111827;
     }
-    .card h2{margin:0 0 8px 0;color:var(--accent);font-size:1rem;display:flex;justify-content:space-between;align-items:center}
-    .meta{font-size:.82rem;color:var(--muted);margin-bottom:8px}
-
-    ul.exercise-list{padding:0;margin:0;list-style:none;display:flex;flex-direction:column;gap:8px}
-    li.exercise{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      background:linear-gradient(180deg,#fbfdff, #f7f9fc);
-      border-radius:10px;
-      padding:10px;
-      border:1px solid rgba(2,6,23,0.03);
+    .tab-buttons button.active {
+      background: #2563eb;
+      color: white;
     }
-    .left{
-      display:flex;flex-direction:column;gap:6px;flex:1;
+    @media (max-width: 600px) {
+      main {
+        padding: 0.5rem;
+      }
     }
-    .ex-title{font-weight:600}
-    .sets{font-size:.92rem;color:#0f172a}
-    .alt{font-size:.82rem;color:var(--muted)}
-
-    .right{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:6px;
-      min-width:88px;
-    }
-    .chk{
-      width:20px;height:20px;
-      accent-color:var(--accent);
-      transform:scale(1.1);
-    }
-    .small{font-size:.78rem;color:var(--muted);text-align:center}
-
-    .day-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-    .toggle{
-      display:inline-flex;
-      gap:6px;
-      align-items:center;
-      padding:6px 8px;
-      border-radius:8px;
-      background:rgba(37,99,235,0.06);
-      color:var(--accent);
-      font-weight:600;
-      border:1px solid rgba(37,99,235,0.06);
-      cursor:default;
-    }
-
-    footer{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-    .muted{color:var(--muted);font-size:.86rem}
-
-    /* collapsible caret */
-    .caret{
-      width:18px;height:18px;display:inline-block;transform:rotate(0deg);transition:transform .22s ease;
-    }
-    .collapsed .caret{transform:rotate(-90deg)}
-    details summary{list-style:none;cursor:pointer;outline:none}
-    details summary::-webkit-details-marker{display:none}
   </style>
 </head>
 <body>
+  <header>
+    <h1>4-Tage Superset Plan</h1>
+  </header>
+
   <main>
-    <header>
-      <div class="title">
-        <div class="logo">4D</div>
-        <div>
-          <h1>4-Tage Superset Plan</h1>
-          <p class="subtitle">Optimiert (9.5/10) — abhakbar &amp; mobile-friendly</p>
-        </div>
-      </div>
-
-      <div class="controls">
-        <label style="display:flex;align-items:center;gap:8px;">
-          <span class="muted">Freitag-Variante:</span>
-          <select id="fridayMode" class="select" title="Freitag-Variante auswählen">
-            <option value="both">Beide</option>
-            <option value="home">Home</option>
-            <option value="gym">Gym</option>
-          </select>
-        </label>
-
-        <button id="resetAll" class="btn" title="Alle Haken zurücksetzen">
-          ⟳ Reset
-        </button>
-
-        <button id="exportBtn" class="btn ghost" title="Aktuellen Status kopieren">
-          Kopiere Status
-        </button>
-      </div>
-    </header>
-
-    <section class="grid">
-      <!-- Monday -->
-      <article class="card">
-        <h2>Montag — Brust + Bizeps + Core <span class="small">4×5–7 / 3×8–15</span></h2>
-        <div class="meta">Ziel: Brustfokus, Zugbalance, Arme &amp; Core</div>
-
-        <ul class="exercise-list" id="day-mon">
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Bankdrücken (Langhantel)</div>
-              <div class="alt">4×5–7 — Alt: Kurzhantel-Bankdrücken, Schrägbank-KH</div>
-            </div>
-            <div class="right">
-              <input id="mo1" class="chk" type="checkbox">
-              <div class="small">4×5–7</div>
-            </div>
-          </li>
-
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Face Pull (Kabel/Band)</div>
-              <div class="alt">4×12–15 — Alt: Reverse Fly (KH/Band)</div>
-            </div>
-            <div class="right">
-              <input id="mo2" class="chk" type="checkbox">
-              <div class="small">4×12–15</div>
-            </div>
-          </li>
-
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Schrägbank-Kurzhantel-Drücken</div>
-              <div class="alt">3×8–10 — Alt: Maschine-Schrägbank / Dips</div>
-            </div>
-            <div class="right">
-              <input id="mo3" class="chk" type="checkbox">
-              <div class="small">3×8–10</div>
-            </div>
-          </li>
-
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Schrägbank-KH-Curl</div>
-              <div class="alt">3×10–12 — Alt: Preacher / SZ</div>
-            </div>
-            <div class="right">
-              <input id="mo4" class="chk" type="checkbox">
-              <div class="small">3×10–12</div>
-            </div>
-          </li>
-
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Cable-Cross (low→high)</div>
-              <div class="alt">3×12–15 — Alt: KH-Fly / enge Push-Ups</div>
-            </div>
-            <div class="right">
-              <input id="mo5" class="chk" type="checkbox">
-              <div class="small">3×12–15</div>
-            </div>
-          </li>
-
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Hammer-Curl</div>
-              <div class="alt">3×12–15 — Alt: Wechsel-KH-Curl / Kabel-Curl</div>
-            </div>
-            <div class="right">
-              <input id="mo6" class="chk" type="checkbox">
-              <div class="small">3×12–15</div>
-            </div>
-          </li>
-
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Hängende Kniehebel</div>
-              <div class="alt">3×12–15 — Alt: Beinheben liegend / Plank-Leg-Raise</div>
-            </div>
-            <div class="right">
-              <input id="mo7" class="chk" type="checkbox">
-              <div class="small">3×12–15</div>
-            </div>
-          </li>
-        </ul>
-
-        <div class="day-actions">
-          <div class="toggle">Tip: Supersets → Grundübungen zuerst, Face Pull für Schultergesundheit</div>
-        </div>
-      </article>
-
-      <!-- Wednesday -->
-      <article class="card">
-        <h2>Mittwoch — Rücken + Trizeps + Unterer Rücken <span class="small">4×6–12</span></h2>
-        <div class="meta">Ziel: starker Rücken, Trizeps, Haltung</div>
-
-        <ul class="exercise-list" id="day-wed">
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Klimmzug (weit, ggf. gewichtet)</div>
-              <div class="alt">4×6–8 — Alt: Australisches Rudern, Latzug</div>
-            </div>
-            <div class="right">
-              <input id="mi1" class="chk" type="checkbox">
-              <div class="small">4×6–8</div>
-            </div>
-          </li>
-
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Enges Bankdrücken</div>
-              <div class="alt">4×6–8 — Alt: Überkopf-Extension, Dips</div>
-            </div>
-            <div class="right">
-              <input id="mi2" class="chk" type="checkbox">
-              <div class="small">4×6–8</div>
-            </div>
-          </li>
-
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Brustgestütztes Rudern</div>
-              <div class="alt">4×8–10 — Alt: Einarmiges KH-Rudern, Kabel</div>
-            </div>
-            <div class="right">
-              <input id="mi3" class="chk" type="checkbox">
-              <div class="small">4×8–10</div>
-            </div>
-          </li>
-
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Überkopf-Kurzhantel-Extension</div>
-              <div class="alt">4×10–12 — Alt: Rope Pushdown, Dips</div>
-            </div>
-            <div class="right">
-              <input id="mi4" class="chk" type="checkbox">
-              <div class="small">4×10–12</div>
-            </div>
-          </li>
-
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Face Pull</div>
-              <div class="alt">3×12–15 — Alt: Reverse Fly, Band Pull-Apart</div>
-            </div>
-            <div class="right">
-              <input id="mi5" class="chk" type="checkbox">
-              <div class="small">3×12–15</div>
-            </div>
-          </li>
-
-          <li class="exercise">
-            <div class="left">
-              <div class="ex-title">Rückenstrecker (gewichtet)</div>
-              <div class="alt">3×10–12 — Alt: RDL, Hyperextensions</div>
-            </div>
-            <div class="right">
-              <input id="mi6" class="chk" type="checkbox">
-              <div class="small">3×10–12</div>
-            </div>
-          </li>
-        </ul>
-
-        <div class="day-actions">
-          <div class="toggle">Tipp: Supersets Push/Pull so wählen, dass Hauptlifts nicht gegenseitig limitieren</div>
-        </div>
-      </article>
-
-      <!-- Friday (Home + Gym configurable) -->
-      <article class="card" id="card-friday">
-        <h2>Freitag — Brust/Rücken Pump <span class="small">Kurz-Circuit • 3 Runden • 2 RIR</span></h2>
-        <div class="meta">Ziel: extra Frequenz, Pump &amp; Technik — wähle Home/Gym oben</div>
-
-        <div id="fridayHome" class="friday-variant">
-          <details open>
-            <summary>Home Variante <span class="caret">▾</span></summary>
-            <ul class="exercise-list" style="margin-top:8px">
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Push-Ups</div><div class="alt">3×12–15 — Alt: Dips, erhöhte Push-Ups</div></div>
-                <div class="right"><input id="frH1" class="chk" type="checkbox"><div class="small">3×12–15</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Chin-Ups (Untergriff)</div><div class="alt">3×8–10 — Alt: Negativ-Klimmzüge</div></div>
-                <div class="right"><input id="frH2" class="chk" type="checkbox"><div class="small">3×8–10</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Australisches Rudern (Tisch)</div><div class="alt">3×10–12 — Alt: TRX, Rudern mit Handtuch</div></div>
-                <div class="right"><input id="frH3" class="chk" type="checkbox"><div class="small">3×10–12</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Push-Ups mit erhöhten Füßen</div><div class="alt">3×10–12 — Alt: weite Push-Ups</div></div>
-                <div class="right"><input id="frH4" class="chk" type="checkbox"><div class="small">3×10–12</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Pike Push-Ups</div><div class="alt">3×8–10 — Alt: Pike Press, Schulter-Tap Push-Ups</div></div>
-                <div class="right"><input id="frH5" class="chk" type="checkbox"><div class="small">3×8–10</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Face Pull (Band / Handtuch)</div><div class="alt">3×15–20 — Alt: Band Pull-Apart</div></div>
-                <div class="right"><input id="frH6" class="chk" type="checkbox"><div class="small">3×15–20</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Hängende Kniehebel</div><div class="alt">3×12 — Alt: Beinheben am Boden</div></div>
-                <div class="right"><input id="frH7" class="chk" type="checkbox"><div class="small">3×12</div></div>
-              </li>
-            </ul>
-          </details>
-        </div>
-
-        <div id="fridayGym" class="friday-variant" style="margin-top:10px">
-          <details>
-            <summary>Gym Variante <span class="caret">▾</span></summary>
-            <ul class="exercise-list" style="margin-top:8px">
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Kabel / Maschinen Pushdown / Enges Bankdrücken</div><div class="alt">3×12–15 — Alt: Dips, Overhead Extension</div></div>
-                <div class="right"><input id="frG1" class="chk" type="checkbox"><div class="small">3×12–15</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Latziehen Untergriff / Chin-Ups</div><div class="alt">3×8–10 — Alt: Negativ-Klimmzüge, Kabelrudern</div></div>
-                <div class="right"><input id="frG2" class="chk" type="checkbox"><div class="small">3×8–10</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Kabelrudern (brustgestützt)</div><div class="alt">3×10–12 — Alt: Einarmiges KH-Rudern</div></div>
-                <div class="right"><input id="frG3" class="chk" type="checkbox"><div class="small">3×10–12</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Dips (enger Griff)</div><div class="alt">3×10–12 — Alt: Overhead Extension</div></div>
-                <div class="right"><input id="frG4" class="chk" type="checkbox"><div class="small">3×10–12</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Schulterdrücken Kabel / Arnold Press</div><div class="alt">3×8–10 — Alt: Pike Push-Ups</div></div>
-                <div class="right"><input id="frG5" class="chk" type="checkbox"><div class="small">3×8–10</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Face Pull (Kabel)</div><div class="alt">3×15–20 — Alt: Band Pull-Apart</div></div>
-                <div class="right"><input id="frG6" class="chk" type="checkbox"><div class="small">3×15–20</div></div>
-              </li>
-
-              <li class="exercise">
-                <div class="left"><div class="ex-title">Hängende Kniehebel / Cable Crunch</div><div class="alt">3×12–15 — Alt: Beinheben am Boden</div></div>
-                <div class="right"><input id="frG7" class="chk" type="checkbox"><div class="small">3×12–15</div></div>
-              </li>
-            </ul>
-          </details>
-        </div>
-
-        <div class="day-actions">
-          <div class="toggle">Kurz-Circuit • 3 Runden • 60–90s Pause • 2 RIR</div>
-        </div>
-      </article>
-
-      <!-- Saturday -->
-      <article class="card">
-        <h2>Samstag — Beine + Schultern + Core <span class="small">4×6–15</span></h2>
-        <div class="meta">Ziel: Unterkörper, Schulterkappe, Stabilität</div>
-
-        <ul class="exercise-list" id="day-sat">
-          <li class="exercise">
-            <div class="left"><div class="ex-title">Kniebeuge (Langhantel)</div><div class="alt">4×6–8 — Alt: Beinpresse, Goblet-Squat</div></div>
-            <div class="right"><input id="sa1" class="chk" type="checkbox"><div class="small">4×6–8</div></div>
-          </li>
-
-          <li class="exercise">
-            <div class="left"><div class="ex-title">Reverse Fly (KH/Kabel)</div><div class="alt">4×12–15 — Alt: Face Pull, Rear-Delt Maschine</div></div>
-            <div class="right"><input id="sa2" class="chk" type="checkbox"><div class="small">4×12–15</div></div>
-          </li>
-
-          <li class="exercise">
-            <div class="left"><div class="ex-title">Kurzhantel-Schulterdrücken (stehend)</div><div class="alt">4×8–10 — Alt: Arnold Press, Maschine</div></div>
-            <div class="right"><input id="sa3" class="chk" type="checkbox"><div class="small">4×8–10</div></div>
-          </li>
-
-          <li class="exercise">
-            <div class="left"><div class="ex-title">Rumänisches Kreuzheben</div><div class="alt">3×8–10 — Alt: Bein-Curl, Good-Morning</div></div>
-            <div class="right"><input id="sa4" class="chk" type="checkbox"><div class="small">3×8–10</div></div>
-          </li>
-
-          <li class="exercise">
-            <div class="left"><div class="ex-title">Bulgarian Split Squat</div><div class="alt">3×10–12 / Bein — Alt: Step-Ups</div></div>
-            <div class="right"><input id="sa5" class="chk" type="checkbox"><div class="small">3×10–12/Bein</div></div>
-          </li>
-
-          <li class="exercise">
-            <div class="left"><div class="ex-title">Seitheben</div><div class="alt">3×12–15 — Alt: Kabel-Seitheben</div></div>
-            <div class="right"><input id="sa6" class="chk" type="checkbox"><div class="small">3×12–15</div></div>
-          </li>
-
-          <li class="exercise">
-            <div class="left"><div class="ex-title">Wadenheben (stehend/sitzend)</div><div class="alt">4×12–15 — Alt: Einbeinige Wadenhebung</div></div>
-            <div class="right"><input id="sa7" class="chk" type="checkbox"><div class="small">4×12–15</div></div>
-          </li>
-
-          <li class="exercise">
-            <div class="left"><div class="ex-title">Kurzhantel-Shrug</div><div class="alt">4×12–15 — Alt: Langhantel-Shrug</div></div>
-            <div class="right"><input id="sa8" class="chk" type="checkbox"><div class="small">4×12–15</div></div>
-          </li>
-        </ul>
-
-        <div class="day-actions">
-          <div class="toggle">Tipp: Reverse Fly vor Drücken für bessere Schulterposition</div>
-        </div>
-      </article>
+    <!-- Montag -->
+    <section id="montag">
+      <h2>Montag – Brust + Bizeps + Core</h2>
+      <div id="montag-list"></div>
+      <button onclick="resetDay('montag')">Reset Montag</button>
     </section>
 
-    <footer>
-      <div class="muted">Progression: Double-Progression → obere Rep-Range erreichen → Gewicht erhöhen.</div>
-      <div style="flex:1"></div>
-      <div class="muted">Status wird lokal im Browser gespeichert.</div>
-    </footer>
+    <!-- Mittwoch -->
+    <section id="mittwoch">
+      <h2>Mittwoch – Rücken + Trizeps + Unterer Rücken</h2>
+      <div id="mittwoch-list"></div>
+      <button onclick="resetDay('mittwoch')">Reset Mittwoch</button>
+    </section>
+
+    <!-- Freitag -->
+    <section id="freitag">
+      <h2>Freitag – Brust/Rücken Pump</h2>
+      <div class="tab-buttons">
+        <button id="homeTab" class="active" onclick="showFreitag('home')">Home</button>
+        <button id="gymTab" onclick="showFreitag('gym')">Gym</button>
+      </div>
+      <div id="freitag-home"></div>
+      <div id="freitag-gym" style="display:none;"></div>
+      <button onclick="resetDay('freitag-home'); resetDay('freitag-gym')">Reset Freitag</button>
+    </section>
+
+    <!-- Samstag -->
+    <section id="samstag">
+      <h2>Samstag – Beine + Schultern + Core</h2>
+      <div id="samstag-list"></div>
+      <button onclick="resetDay('samstag')">Reset Samstag</button>
+    </section>
   </main>
 
   <script>
-    (function(){
-      const inputs = Array.from(document.querySelectorAll('.chk'));
-      const resetBtn = document.getElementById('resetAll');
-      const exportBtn = document.getElementById('exportBtn');
-      const fridayMode = document.getElementById('fridayMode');
+    const plan = {
+      montag: [
+        ["Bankdrücken (Langhantel) – 4×5–7", "Alt: KH-Bankdrücken, Schrägbank-KH-Drücken"],
+        ["Face Pull (Kabel/Band) – 4×12–15", "Alt: Reverse Fly (KH oder Band)"],
+        ["Schrägbank-KH-Drücken – 3×8–10", "Alt: Maschine-Schrägbank, Dips"],
+        ["Schrägbank-KH-Curl – 3×10–12", "Alt: Preacher-Curl, SZ-Curl"],
+        ["Cable-Cross (low→high) – 3×12–15", "Alt: KH-Fly, enge Push-Ups"],
+        ["Hammer-Curl – 3×12–15", "Alt: Wechsel-KH-Curl, Kabel-Curl"],
+        ["Hängende Kniehebel – 3×12–15", "Alt: Beinheben liegend, Plank-Leg-Raise"]
+      ],
+      mittwoch: [
+        ["Klimmzug (weit) – 4×6–8", "Alt: Australisches Rudern, Latzug"],
+        ["Enges Bankdrücken – 4×6–8", "Alt: Über-Kopf-Extension, Dips"],
+        ["Brustgestütztes Rudern – 4×8–10", "Alt: Einarmiges KH-Rudern, Kabelrudern"],
+        ["Über-Kopf-KH-Extension – 4×10–12", "Alt: Rope Pushdown, Dips (eng)"],
+        ["Face Pull – 3×12–15", "Alt: Reverse Fly, Band Pull-Apart"],
+        ["Rückenstrecker (gewichtet) – 3×10–12", "Alt: Rumänisches Kreuzheben, Hyperextensions"]
+      ],
+      "freitag-home": [
+        ["Push-Ups – 3×12–15", "Alt: Push-Ups erhöht, Diamant-Push-Ups"],
+        ["Chin-Ups (Untergriff) – 3×8–10", "Alt: Australisches Rudern, Negative Klimmzüge"],
+        ["Australisches Rudern – 3×10–12", "Alt: Rudern mit Handtuch, Wide Pull-Ups"],
+        ["Push-Ups mit erhöhten Füßen – 3×10–12", "Alt: Schnelle Push-Ups, weite Push-Ups"],
+        ["Pike Push-Ups – 3×8–10", "Alt: Pike Press, Schulter-Tap Push-Ups"],
+        ["Face Pull (Handtuch/Band) – 3×15–20", "Alt: Band Pull-Apart, Reverse Fly (KG)"],
+        ["Hängende Kniehebel – 3×12", "Alt: Beinheben am Boden"]
+      ],
+      "freitag-gym": [
+        ["Kabel/Maschinen Pushdown oder Enges Bankdrücken – 3×12–15", "Alt: Dips, Überkopf-KH-Extension"],
+        ["Latziehen Untergriff / Chin-Ups – 3×8–10", "Alt: Negative Klimmzüge, Kabelrudern"],
+        ["Kabelrudern (Brustgestützt) – 3×10–12", "Alt: Einarmiges KH-Rudern"],
+        ["Dips (enger Griff) – 3×10–12", "Alt: Überkopf-KH-Extension, Push-Ups"],
+        ["Schulterdrücken Kabel / Arnold Press – 3×8–10", "Alt: Pike Push-Ups"],
+        ["Face Pull (Kabel) – 3×15–20", "Alt: Band Pull-Apart, Reverse Fly"],
+        ["Hängende Kniehebel oder Cable Crunch – 3×12–15", "Alt: Beinheben am Boden"]
+      ],
+      samstag: [
+        ["Kniebeuge (Langhantel) – 4×6–8", "Alt: Beinpresse, Goblet-Squat"],
+        ["Reverse Fly (KH/Kabel) – 4×12–15", "Alt: Face Pull, Rear-Delt-Maschine"],
+        ["Kurzhantel-Schulterdrücken – 4×8–10", "Alt: Arnold Press, Maschine"],
+        ["Rumänisches Kreuzheben – 3×8–10", "Alt: Bein-Curl, Good-Morning"],
+        ["Bulgarian Split Squat – 3×10–12/Bein", "Alt: Step-Ups, Beinpresse (hoch)"],
+        ["Seitheben – 3×12–15", "Alt: Kabel-Seitheben, Leaning Lateral"],
+        ["Wadenheben – 4×12–15", "Alt: Einbeinige Wadenhebung, Beinpresse-Wadenheben"],
+        ["Kurzhantel-Shrug – 4×12–15", "Alt: Langhantel-Shrug, Kabel-Shrug"]
+      ]
+    };
 
-      // load saved checkbox state
-      inputs.forEach(cb=>{
-        try{
-          const saved = localStorage.getItem('chk-'+cb.id);
-          if(saved === '1') cb.checked = true;
-        }catch(e){}
-        cb.addEventListener('change', ()=> {
-          try{
-            if(cb.checked) localStorage.setItem('chk-'+cb.id,'1');
-            else localStorage.removeItem('chk-'+cb.id);
-          }catch(e){}
-        });
+    function loadDay(day) {
+      const container = document.getElementById(day + (day.includes("freitag") ? "" : "-list"));
+      const exercises = plan[day];
+      container.innerHTML = exercises
+        .map(
+          ([ex, alt], i) => `
+        <label>
+          <input type="checkbox" id="${day}-${i}" ${localStorage.getItem(`${day}-${i}`) === "true" ? "checked" : ""} onchange="saveCheck('${day}-${i}', this.checked)">
+          <div><strong>${ex}</strong><div class="alt">${alt}</div></div>
+        </label>`
+        )
+        .join("");
+    }
+
+    function saveCheck(id, value) {
+      localStorage.setItem(id, value);
+    }
+
+    function resetDay(day) {
+      Object.keys(localStorage).forEach(k => {
+        if (k.startsWith(day)) localStorage.removeItem(k);
       });
+      loadDay(day);
+    }
 
-      // reset handler
-      resetBtn.addEventListener('click', ()=>{
-        if(!confirm('Alle Haken wirklich zurücksetzen?')) return;
-        inputs.forEach(cb=>{
-          cb.checked = false;
-          try{ localStorage.removeItem('chk-'+cb.id);}catch(e){}
-        });
-      });
+    function showFreitag(tab) {
+      document.getElementById("freitag-home").style.display = tab === "home" ? "block" : "none";
+      document.getElementById("freitag-gym").style.display = tab === "gym" ? "block" : "none";
+      document.getElementById("homeTab").classList.toggle("active", tab === "home");
+      document.getElementById("gymTab").classList.toggle("active", tab === "gym");
+    }
 
-      // export (copy) status as JSON to clipboard
-      exportBtn.addEventListener('click', async ()=>{
-        const state = {};
-        inputs.forEach(cb => state[cb.id] = !!cb.checked);
-        const json = JSON.stringify(state, null, 2);
-        try{
-          await navigator.clipboard.writeText(json);
-          alert('Status kopiert (JSON).');
-        }catch(e){
-          // fallback
-          prompt('Status (kopieren):', json);
-        }
-      });
-
-      // friday mode: both/home/gym
-      function applyFridayMode(mode){
-        const home = document.getElementById('fridayHome');
-        const gym = document.getElementById('fridayGym');
-        if(mode === 'both'){ home.style.display='block'; gym.style.display='block'; }
-        else if(mode === 'home'){ home.style.display='block'; gym.style.display='none'; }
-        else { home.style.display='none'; gym.style.display='block'; }
-        // save
-        try{ localStorage.setItem('fridayMode', mode);}catch(e){}
-      }
-      fridayMode.addEventListener('change', ()=> applyFridayMode(fridayMode.value));
-      // load friday mode
-      const savedFriday = localStorage.getItem('fridayMode') || 'both';
-      fridayMode.value = savedFriday;
-      applyFridayMode(savedFriday);
-
-      // cosmetic: toggle caret rotation on details open/close
-      document.querySelectorAll('details').forEach(d=>{
-        const caret = d.querySelector('.caret');
-        d.addEventListener('toggle', ()=> {
-          if(!caret) return;
-          if(d.open) caret.style.transform = 'rotate(0deg)';
-          else caret.style.transform = 'rotate(-90deg)';
-        });
-      });
-
-      // small accessibility: allow space to toggle checkbox when focused on li
-      document.querySelectorAll('.exercise').forEach(li=>{
-        li.addEventListener('keydown', (e)=>{
-          if(e.key === ' ' || e.key === 'Enter'){
-            const cb = li.querySelector('input[type=checkbox]');
-            if(cb){ cb.checked = !cb.checked; cb.dispatchEvent(new Event('change')); }
-            e.preventDefault();
-          }
-        });
-        li.tabIndex = 0;
-      });
-    })();
+    loadDay("montag");
+    loadDay("mittwoch");
+    loadDay("freitag-home");
+    loadDay("freitag-gym");
+    loadDay("samstag");
   </script>
 </body>
 </html>
